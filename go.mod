@@ -1,4 +1,4 @@
-module caddy_plugins
+module github.com/wxytjustb/caddy_plugins
 
 go 1.14
 
