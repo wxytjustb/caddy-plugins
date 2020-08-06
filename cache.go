@@ -1,4 +1,4 @@
-package studychanger
+package caddy_plugins
 
 import (
 	"fmt"
