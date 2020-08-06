@@ -1,4 +1,4 @@
-module studychanger
+module caddy_plugins
 
 go 1.14
 
