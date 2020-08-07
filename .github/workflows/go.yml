@@ -27,13 +27,14 @@ jobs:
         wget https://github.com/caddyserver/xcaddy/releases/download/v0.1.5/xcaddy_0.1.5_linux_amd64.tar.gz
         tar -zxvf xcaddy_0.1.5_linux_amd64.tar.gz
         chmod +x xcaddy
-        cp xcaddy /usr/local/bin/
+
         echo github.com/wxytjustb/caddy-plugins@${{ github.ref }}
+        ls
 
     - name: Test
       run: echo '自动化测试'
 
     - name: Build
-      run: xcaddy build --with github.com/wxytjustb/caddy-plugins@${{ github.ref }}
+      run: ./xcaddy build --with github.com/wxytjustb/caddy-plugins@${{ github.ref }}
 
 
