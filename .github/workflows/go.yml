@@ -28,13 +28,13 @@ jobs:
         tar -zxvf xcaddy_0.1.5_linux_amd64.tar.gz
         chmod +x xcaddy
 
-        echo github.com/wxytjustb/caddy-plugins@${{ github.ref }}
+        echo github.com/wxytjustb/caddy-plugins@${GITHUB_REF##*/}
         ls
 
     - name: Test
       run: echo '自动化测试'
 
     - name: Build
-      run: ./xcaddy build --with github.com/wxytjustb/caddy-plugins@${{ github.ref }}
+      run: ./xcaddy build --with github.com/wxytjustb/caddy-plugins@${GITHUB_REF##*/}
 
 
