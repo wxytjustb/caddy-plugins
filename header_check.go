@@ -1,6 +1,8 @@
 package caddy_plugins
 
 import (
+	"encoding/json"
+	"fmt"
 	"github.com/caddyserver/caddy/v2"
 	"github.com/caddyserver/caddy/v2/modules/caddyhttp"
 	"net/http"
@@ -13,10 +15,10 @@ func init() {
 
 // header检查
 type MiddlewareHeaderCheck struct {
-
+	headerMapRaw	json.RawMessage		`json:"header_check,omitempty" caddy:"namespace=http.handlers.header_check"`
+	headerMap 		map[string]string   `json:"-"`
 }
 
-// CaddyModule returns the Caddy module information.
 func (MiddlewareHeaderCheck) CaddyModule() caddy.ModuleInfo {
 	caddy.Log().Named("header_check").Info("init module header_check")
 	return caddy.ModuleInfo{
@@ -27,7 +29,12 @@ func (MiddlewareHeaderCheck) CaddyModule() caddy.ModuleInfo {
 
 // 初始化处理
 func (m MiddlewareHeaderCheck) Provision(ctx caddy.Context) error {
+	fmt.Println(m.headerMap)
 
+	//_, err := ctx.LoadModule(m, "headerMap")
+	//if err != nil {
+	//	fmt.Println(err)
+	//}
 
 	return nil
 }
@@ -36,6 +43,13 @@ func (m MiddlewareHeaderCheck) Provision(ctx caddy.Context) error {
 func (m MiddlewareHeaderCheck) ServeHTTP(w http.ResponseWriter, r *http.Request, next caddyhttp.Handler) error {
 
 	val := r.Header.Values("User-Agent")
+
+	fmt.Println(m.headerMap)
+	for key, val :=range m.headerMap {
+		fmt.Println(key)
+		fmt.Println(val)
+	}
+
 	if len(val) == 0 || !strings.Contains(val[0], "MSIE 11, Windows NT 6.3;"){
 		//w.Write([]byte("illegal request"))
 		w.WriteHeader(401)

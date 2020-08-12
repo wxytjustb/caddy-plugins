@@ -4,3 +4,5 @@
 
 
 xcaddy build --with github.com/wxytjustb/caddy-plugins@master
+GOOS=linux xcaddy build --with github.com/wxytjustb/caddy-plugins@master
+

@@ -1,19 +1,18 @@
 package caddy_plugins
 
 import (
-	"fmt"
 	"github.com/caddyserver/caddy/v2/caddyconfig/caddyfile"
 	"github.com/caddyserver/caddy/v2/caddyconfig/httpcaddyfile"
 	"github.com/caddyserver/caddy/v2/modules/caddyhttp"
 )
 
 func init() {
-	httpcaddyfile.RegisterHandlerDirective("header_check", headerCheckParseCaddyfile)
+	httpcaddyfile.RegisterHandlerDirective("body_reader", checkParseCaddyfile)
 }
 
 // parseCaddyfile unmarshals tokens from h into a new Middleware.
-func headerCheckParseCaddyfile(h httpcaddyfile.Helper) (caddyhttp.MiddlewareHandler, error) {
-	m := MiddlewareHeaderCheck{
+func checkParseCaddyfile(h httpcaddyfile.Helper) (caddyhttp.MiddlewareHandler, error) {
+	m := MiddlewareBodyReader{
 		headerMap: make(map[string]string),
 	}
 
@@ -25,8 +24,6 @@ func headerCheckParseCaddyfile(h httpcaddyfile.Helper) (caddyhttp.MiddlewareHand
 			segments = append(segments, segment)
 		}
 	}
-
-	fmt.Println(m.headerMap)
 
 	return m, nil
 }
